@@ -13,7 +13,7 @@
     enabled: "{{ googlechrome_repo_el_enabled }}"
 
 - name: EL Family | Installing {{ googlechrome_app_name }}
-  ansible.builtin.yum:
+  ansible.builtin.dnf:
     name: "{{ googlechrome_app_name }}"
     state: "{{ googlechrome_desired_state }}"
     update_cache: yes
