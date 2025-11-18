@@ -8,9 +8,12 @@
   when: "ansible_os_family == 'Debian'"
 
 - name: Debian/Ubuntu Family | Add gpg signing key for {{ googlechrome_app_name }}
-  ansible.builtin.apt_key:
+  ansible.builtin.get_url:
     url: "{{ googlechrome_gpg_key }}"
-    state: present
+    checksum: "{{ googlechrome_gpg_key_checksum }}"
+    dest: /usr/share/keyrings/google.asc
+    mode: '644'
+  notify: Update apt cache to include the new repo
 
 - name: Debian/Ubuntu Family | Adding repository {{ googlechrome_repo_debian }}
   ansible.builtin.apt_repository:
